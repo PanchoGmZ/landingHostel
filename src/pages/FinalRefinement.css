@@ -1,0 +1,211 @@
+/* Clip without creating a scroll container, so the gallery's sticky works. */
+.gallery { overflow: clip; }
+/* One secondary face, limited to short editorial accents and interactions. */
+:root { --font-accent: var(--font-sans); }
+.button, .editorial-link, .section-index, .hero__eyebrow, .navbar__whatsapp,
+.navbar__mobile-whatsapp, .contact__whatsapp, .contact__socials a,
+.rooms-carousel__controls button, .hostel-map__interaction button {
+  font-family: var(--font-accent); font-weight: 700;
+}
+.button, .editorial-link { font-size: .9rem; letter-spacing: .075em; }
+.button--primary, .contact__whatsapp, .navbar__mobile-whatsapp {
+  position: relative; isolation: isolate; color: var(--color-charcoal);
+  background: var(--color-mustard); border-bottom: 3px solid var(--color-clay);
+}
+.button--primary::before, .contact__whatsapp::before, .navbar__mobile-whatsapp::before {
+  content: ''; position: absolute; z-index: -1; inset: 0; background: var(--color-white);
+  transform: scaleX(0); transform-origin: left; transition: transform 320ms var(--ease-editorial);
+}
+.button--primary:is(:hover,:focus-visible)::before,
+.contact__whatsapp:is(:hover,:focus-visible)::before,
+.navbar__mobile-whatsapp:is(:hover,:focus-visible)::before { transform: scaleX(1); }
+.button--primary:is(:hover,:focus-visible), .contact__whatsapp:is(:hover,:focus-visible),
+.navbar__mobile-whatsapp:is(:hover,:focus-visible) { color: var(--color-charcoal); background: var(--color-mustard); transform: none; }
+.editorial-link { display: inline-flex; align-items: center; justify-content: space-between; gap: 1.5rem; min-height: 44px; padding-block: .6rem; text-decoration: none; text-transform: uppercase; }
+.editorial-link, .button--text, .contact__socials a, .navbar__whatsapp {
+  background-image: linear-gradient(currentColor,currentColor); background-repeat: no-repeat;
+  background-position: left bottom; background-size: 0 2px;
+  transition: background-size 280ms var(--ease-editorial), color 280ms ease;
+}
+.editorial-link { border-bottom: 1px solid var(--color-clay); }
+.editorial-link:is(:hover,:focus-visible), .button--text:is(:hover,:focus-visible),
+.contact__socials a:is(:hover,:focus-visible), .navbar__whatsapp:is(:hover,:focus-visible) { background-size: 100% 2px; }
+.editorial-link > span { transition: transform 280ms var(--ease-editorial); }
+.editorial-link:is(:hover,:focus-visible) > span { transform: translate(3px,-3px); }
+.hero__controls button { min-width: 44px; min-height: 44px; border-radius: 50% 50% 45% 45%; }
+
+.rooms-carousel { width: min(calc(100% - 2 * var(--page-gutter)), 78rem); margin-inline: auto; }
+.rooms-carousel__viewport { overflow: hidden; touch-action: pan-y pinch-zoom; }
+.rooms-carousel__track { display: flex; }
+.rooms-carousel__slide { flex: 0 0 100%; min-width: 0; display: grid; grid-template-columns: minmax(0,1.65fr) minmax(0,1fr); align-items: center; gap: clamp(2rem,5vw,5rem); }
+.rooms-carousel__slide > img { width: 100%; height: auto; aspect-ratio: 1.55; max-height: 30rem; object-fit: cover; }
+.rooms-carousel__copy { padding: 1rem 1rem 1rem 0; }
+.rooms-carousel__copy h3 { margin: 1.5rem 0 1rem; font: 400 clamp(2rem,3.5vw,4rem)/1.05 var(--font-display); letter-spacing: -.045em; }
+.rooms-carousel__copy p { line-height: 1.6; }
+.rooms-carousel__copy .editorial-link { margin-top: 1.5rem; }
+.rooms-carousel__controls, .rooms-carousel__arrows, .rooms-carousel__dots { display: flex; align-items: center; gap: .5rem; }
+.rooms-carousel__controls { justify-content: space-between; margin-top: 1rem; }
+.rooms-carousel__controls button { min-height: 44px; min-width: 44px; border: 1px solid var(--line-subtle); background: transparent; color: var(--color-charcoal); font-size: 1.2rem; cursor: pointer; transition: color 220ms, background-color 220ms; }
+.rooms-carousel__controls button:is(:hover,:focus-visible) { color: var(--color-white); background: var(--color-charcoal); }
+.rooms-carousel__dots { gap: 0; }
+.rooms-carousel__dots button { display: grid; place-items: center; border: 0; }
+.rooms-carousel__dots span { display: block; width: 16px; height: 2px; background: var(--color-charcoal); opacity: .3; transition: transform 240ms, opacity 240ms; }
+.rooms-carousel__dots [aria-current] span { opacity: 1; transform: scaleX(1.4); background: var(--color-clay); }
+.rooms-carousel__dots button:hover span { background: var(--color-white); opacity: 1; }
+.rooms-carousel__arrows .rooms-carousel__pause { font-size: .85rem; padding-inline: .6rem; border: 0; }
+
+.gallery__immersive { position: relative; min-height: 155svh; margin-bottom: clamp(3rem,6vw,6rem); color: var(--color-white); background: var(--color-charcoal); }
+.gallery__sticky-photo { position: sticky; top: 0; height: 100svh; margin: 0; }
+.gallery__sticky-photo img { width: 100%; height: 100%; object-fit: cover; }
+.gallery__sticky-photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg,rgba(33,30,30,.7),rgba(33,30,30,.18)),linear-gradient(0deg,rgba(33,30,30,.5),transparent); }
+.gallery__sticky-photo figcaption { position: absolute; bottom: 2rem; right: var(--page-gutter); z-index: 1; font: 700 .85rem var(--font-accent); letter-spacing: .12em; text-transform: uppercase; }
+.gallery__immersive-copy { position: relative; z-index: 1; width: min(calc(100% - 2 * var(--page-gutter)),var(--content-width)); margin: -65svh auto 0; padding-bottom: 12svh; }
+.gallery__immersive-copy h2 { max-width: 12ch; margin: 2rem 0; font: 400 clamp(4rem,8vw,9rem)/.95 var(--font-display); letter-spacing: -.055em; }
+.gallery__immersive-copy .section-index { color: var(--color-white); }
+.gallery__immersive-copy .gallery__intro { max-width: 30ch; margin: 0; font-size: clamp(1rem,1.5vw,1.4rem); }
+.gallery__grid--continuation .gallery__item--portrait { grid-column: 1 / 6; grid-row: 1; margin: 0; }
+.gallery__grid--continuation .gallery__item--vertical { grid-column: 8 / 12; grid-row: 1; margin: 5rem 0 0; }
+.gallery__grid--continuation .gallery__item--wide { grid-column: 5 / 13; grid-row: 2; margin: 0; }
+.gallery__grid--continuation .gallery__item--square { grid-column: 1 / 4; grid-row: 2; margin: 2rem 0 0; }
+
+.location__details .editorial-link { margin-top: 1.5rem; font-size: .85rem; }
+.location__details .editorial-link span { margin: 0; font-size: 1.2rem; color: inherit; }
+.location__map { grid-column: 1 / -1; min-width: 0; min-height: clamp(22rem,42vw,34rem); margin-top: 2rem; background: var(--color-paper); }
+.hostel-map { position: relative; isolation: isolate; }
+.hostel-map__canvas { height: clamp(22rem,42vw,34rem); width: 100%; z-index: 0; font-family: var(--font-sans); }
+.hostel-map__loading { padding: 2rem; }
+.hostel-map__marker { background: transparent; }
+.hostel-map__marker span { display: block; width: 32px; height: 32px; border: 4px solid white; border-radius: 50% 50% 50% 0; background: var(--color-clay); transform: rotate(-45deg); box-shadow: 0 2px 8px #211e1e40; }
+.hostel-map__interaction { position: absolute; z-index: 500; inset: 0; display: grid; place-items: center; touch-action: pan-y; background: #ffffff18; }
+.hostel-map__interaction--active { inset: auto 1rem 2rem auto; }
+.hostel-map__interaction button { min-height: 44px; padding: .8rem 1rem; border: 1px solid var(--color-charcoal); color: var(--color-white); background: var(--color-charcoal); cursor: pointer; }
+.hostel-map .leaflet-control-zoom a { width: 44px; height: 44px; line-height: 44px; }
+.hostel-map .leaflet-popup-content { line-height: 1.6; }
+.hostel-map .leaflet-container a.leaflet-popup-close-button { width: 32px; height: 32px; }
+
+@media (max-width: 47.99rem) {
+  .rooms-carousel__slide { grid-template-columns: 1fr; gap: 0; align-content: start; }
+  .rooms-carousel__slide > img { aspect-ratio: 1.25; max-height: none; }
+  .rooms-carousel__copy { padding: 1.2rem 0 0 9%; }
+  .rooms-carousel__copy h3 { margin: .8rem 0; font-size: clamp(2rem,8vw,3rem); }
+  .rooms-carousel__copy .editorial-link { margin-top: .5rem; }
+  .rooms-carousel__controls { flex-wrap: wrap; gap: .3rem; }
+  .rooms-carousel__dots button { min-width: 32px; }
+  .rooms-carousel__arrows { gap: .25rem; }
+  .rooms-carousel__arrows .rooms-carousel__pause { padding-inline: .3rem; }
+  .gallery__immersive { min-height: 85svh; display: grid; }
+  .gallery__sticky-photo { position: absolute; inset: 0; height: 100%; }
+  .gallery__immersive-copy { align-self: center; margin: 0 auto; padding-block: 5rem 6rem; }
+  .gallery__immersive-copy h2 { font-size: clamp(3.2rem,12vw,5.5rem); }
+  .gallery__grid--continuation .gallery__item--portrait { grid-column: 1 / 6; grid-row: 1; }
+  .gallery__grid--continuation .gallery__item--vertical { grid-column: 2 / 7; grid-row: 2; margin: 0; }
+  .gallery__grid--continuation .gallery__item--wide { grid-column: 1 / 7; grid-row: 3; }
+  .gallery__grid--continuation .gallery__item--square { grid-column: 3 / 7; grid-row: 4; margin: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gallery__immersive { min-height: 0; display: grid; }
+  .gallery__sticky-photo { position: absolute; inset: 0; height: 100%; }
+  .gallery__immersive-copy { margin: 0 auto; padding-block: 8rem; }
+  .editorial-link:is(:hover,:focus-visible) > span { transform: none; }
+}
+
+/* Final typography and shared interaction language. */
+:root { --nav-clearance: 5.25rem; }
+.about__copy, .experience__aside, .rooms__intro-note, .rooms-carousel__copy p,
+.spaces__intro > p:last-child, .products__intro > p:last-child,
+.gallery__intro, .services__description, .location__description {
+  font-family: var(--font-accent);
+  font-weight: 400;
+  font-size: clamp(1.1rem, 1.35vw, 1.42rem);
+  line-height: 1.48;
+  letter-spacing: .002em;
+  text-wrap: pretty;
+}
+.about__copy { max-width: 38ch; line-height: 1.48; }
+.experience__aside p { max-width: 37ch; font-size: inherit; line-height: inherit; }
+.rooms__intro-note { max-width: 34ch; line-height: 1.48; }
+.spaces__intro > p:last-child, .products__intro > p:last-child { max-width: 38ch; }
+.services__description { max-width: 29ch; margin-top: clamp(1.5rem,3vw,2.5rem); }
+.location__details .location__description { max-width: 33ch; margin-top: 1.25rem; font-family: var(--font-accent); font-weight: 400; font-size: clamp(1.1rem,1.35vw,1.35rem); line-height: 1.48; }
+.gallery__immersive-copy .gallery__intro { max-width: 36ch; font-size: clamp(1.12rem,1.45vw,1.4rem); line-height: 1.48; }
+
+.navbar__inner { grid-template-columns: minmax(0,1fr) clamp(6.6rem,8.3vw,8.3rem) minmax(0,1fr); }
+.navbar__brand { position: absolute; top: 50%; left: 50%; grid-column: auto; grid-row: auto; transform: translate(-50%,-50%) scale(1); }
+.navbar--scrolled .navbar__inner { min-height: 4.25rem; }
+.navbar--scrolled .navbar__brand { transform: translate(-50%,-50%) scale(.52); }
+.navbar--scrolled .navbar__links a { padding-block: .3rem; }
+.navbar--scrolled .navbar__whatsapp { min-height: 2.75rem; }
+
+.button--primary, .contact__whatsapp, .navbar__mobile-whatsapp {
+  color: var(--color-white);
+  background: color-mix(in srgb, var(--color-clay) 80%, var(--color-charcoal));
+  border-bottom-color: var(--color-mustard);
+}
+.button--primary { font-size: 1.05rem; }
+.button--primary:is(:hover,:focus-visible), .contact__whatsapp:is(:hover,:focus-visible),
+.navbar__mobile-whatsapp:is(:hover,:focus-visible) {
+  color: var(--color-charcoal);
+  background: color-mix(in srgb, var(--color-clay) 80%, var(--color-charcoal));
+}
+.editorial-link svg, .button--text svg, .navbar__whatsapp svg,
+.navbar__mobile-whatsapp svg, .contact__whatsapp svg, .contact__socials svg,
+.hostel-map__interaction svg { flex: none; transition: transform 280ms var(--ease-editorial); }
+.editorial-link:is(:hover,:focus-visible) svg, .button--text:is(:hover,:focus-visible) svg,
+.navbar__whatsapp:is(:hover,:focus-visible) svg, .navbar__mobile-whatsapp:is(:hover,:focus-visible) svg,
+.contact__whatsapp:is(:hover,:focus-visible) svg, .contact__socials a:is(:hover,:focus-visible) svg,
+.hostel-map__interaction button:is(:hover,:focus-visible) svg { transform: translateY(-2px); }
+.contact__socials a { align-items: center; }
+.hero__controls button, .rooms-carousel__arrows button { display: inline-grid; place-items: center; }
+
+/* Rooms are a photographic spread; copy sits within the image field. */
+.rooms-carousel { width: min(92vw, 112rem); }
+.rooms-carousel__slide { position: relative; display: block; overflow: hidden; background: var(--color-charcoal); }
+.rooms-carousel__slide::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(90deg,rgba(33,30,30,.78),transparent 70%),linear-gradient(0deg,rgba(33,30,30,.72),transparent 58%); }
+.rooms-carousel__slide > img { display: block; width: 100%; height: auto; max-height: 85svh; aspect-ratio: 1.65; object-fit: cover; }
+.rooms-carousel__copy { position: absolute; z-index: 1; bottom: 0; left: 0; width: min(42rem,75%); padding: clamp(2rem,4vw,4.5rem); color: var(--color-white); }
+.rooms-carousel__copy .section-index { display: inline-flex; align-items: center; gap: .6rem; color: var(--color-white); }
+.rooms-carousel__copy h3 { margin: clamp(1rem,2vw,2rem) 0 .8rem; font-size: clamp(3.2rem,6vw,7rem); line-height: .94; }
+.rooms-carousel__copy p { max-width: 32ch; }
+.rooms-carousel__copy .editorial-link { margin-top: 1rem; border-bottom-color: var(--color-mustard); color: var(--color-white); }
+.rooms-carousel__controls { margin-top: 1.25rem; }
+.rooms-carousel__arrows .rooms-carousel__pause { display: grid; place-items: center; min-width: 44px; padding: 0; }
+
+/* The same photograph becomes a quiet color field around the sharp image. */
+.gallery__sticky-photo { isolation: isolate; overflow: hidden; background: color-mix(in srgb, var(--color-clay) 22%, var(--color-charcoal)); }
+.gallery__sticky-photo::before { content: ''; position: absolute; z-index: 0; inset: -5%; background-image: var(--gallery-backdrop); background-position: center; background-size: cover; filter: blur(22px) brightness(.62); transform: scale(1.05); }
+.gallery__sticky-photo img { position: relative; z-index: 1; width: min(92%,100rem); height: calc(100% - 4rem); margin: 2rem auto; object-fit: cover; mask-image: linear-gradient(90deg,transparent,#000 3%,#000 97%,transparent); }
+.gallery__sticky-photo::after { z-index: 2; background: linear-gradient(90deg,rgba(33,30,30,.63),rgba(33,30,30,.08)),linear-gradient(0deg,rgba(33,30,30,.35),transparent); }
+.gallery__sticky-photo figcaption { z-index: 3; }
+
+@media (max-width: 78rem) {
+  .navbar--scrolled .navbar__inner { min-height: 4.4rem; }
+  .navbar--scrolled .navbar__brand { transform: translate(-50%,-50%) scale(.55); }
+}
+
+@media (max-width: 47.99rem) {
+  :root { --nav-clearance: 4.9rem; }
+  .navbar--scrolled .navbar__inner { min-height: 4.15rem; }
+  .navbar--scrolled .navbar__brand { transform: translate(-50%,-50%) scale(.68); }
+  .navbar__mobile-menu summary { min-width: 3.3rem; min-height: 3.3rem; }
+  .about__copy, .experience__aside, .rooms__intro-note, .rooms-carousel__copy p,
+  .spaces__intro > p:last-child, .products__intro > p:last-child,
+  .gallery__intro, .services__description, .location__description { font-size: clamp(1.1rem,4.5vw,1.28rem); }
+  .experience__aside { margin-left: 9%; }
+  .rooms__intro-note { max-width: 36ch; }
+  .rooms-carousel { width: calc(100% - 1rem); }
+  .rooms-carousel__slide > img { height: clamp(27rem,125vw,37rem); max-height: none; aspect-ratio: auto; }
+  .rooms-carousel__slide::after { background: linear-gradient(0deg,rgba(33,30,30,.88),rgba(33,30,30,.42) 48%,transparent 78%); }
+  .rooms-carousel__copy { width: 100%; padding: 1.5rem; }
+  .rooms-carousel__copy h3 { margin: .65rem 0; font-size: clamp(2.35rem,10vw,3.8rem); }
+  .rooms-carousel__copy p { max-width: 30ch; }
+  .rooms-carousel__copy .editorial-link { margin-top: .6rem; }
+  .rooms-carousel__controls { padding-inline: .5rem; }
+  .gallery__sticky-photo::before { display: none; }
+  .gallery__sticky-photo img { width: 100%; height: 100%; margin: 0; mask-image: none; }
+  .gallery__immersive-copy .gallery__intro { margin-left: 0; font-size: clamp(1.1rem,4.4vw,1.3rem); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .editorial-link:is(:hover,:focus-visible) svg, .button--text:is(:hover,:focus-visible) svg,
+  .navbar__whatsapp:is(:hover,:focus-visible) svg, .contact__whatsapp:is(:hover,:focus-visible) svg { transform: none; }
+}
